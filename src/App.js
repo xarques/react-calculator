@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-const App () => {
+const App = () => {
   return (
     <div className="App">
       Hello World!
