@@ -5,6 +5,6 @@ import App from './App';
 describe('App', () => {
   it('should render a <div />', () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.find('div').length).toEquals(1);
+    expect(wrapper.find('div').length).toEqual(1);
   })
 })
