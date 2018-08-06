@@ -2,7 +2,7 @@ version: 2
 jobs:
   checkout_code:
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:8
     working_directory: ~/circleci-deployment
     steps:
       - checkout
@@ -22,7 +22,7 @@ jobs:
           paths: .
   check_vulnerabilities:
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:8
     working_directory: ~/circleci-deployment
     steps:
       - attach_workspace:
@@ -36,7 +36,7 @@ jobs:
             fi
   test_and_report:
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:8
     working_directory: ~/circleci-deployment
     steps:
       - attach_workspace:
