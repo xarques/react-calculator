@@ -2,6 +2,8 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import Calculator from '../Calculator/Calculator';
 import Display from '../Display/Display';
+import Keypad from '../Keypad/Keypad';
+
 
 describe('Calculator', () => {
   let wrapper;
@@ -13,7 +15,16 @@ describe('Calculator', () => {
     expect(wrapper.find('div').length).toEqual(1);
   });
 
-  it('should render the Display Component', () => {
-    expect(wrapper.containsMatchingElement(<Display displayValue={wrapper.instance().state.displayValue}/>)).toEqual(true);
+  it('should render the Display and Keypad Components', () => {
+    expect(wrapper.containsAllMatchingElements([
+      <Display displayValue={wrapper.instance().state.displayValue}/>,
+      <Keypad
+        callOperator={wrapper.instance().callOperator}
+        numbers={wrapper.instance().state.numbers}
+        operators={wrapper.instance().state.operators}
+        setOperator={wrapper.instance().setOperator}
+        updateDisplay={wrapper.instance().updateDisplay}
+      />
+    ])).toEqual(true); 
   });
 });

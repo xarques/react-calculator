@@ -12,6 +12,10 @@ describe('Display', () => {
     expect(wrapper.find('div').length).toEqual(1);
   });
 
+  it('should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('renders the value of displayValue', () => {
     wrapper.setProps({displayValue: 'test'});
     expect(wrapper.text()).toEqual('test');
