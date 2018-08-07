@@ -6,13 +6,23 @@ import './Keypad.css';
 const Keypad = ({callOperator, numbers, operators, setOperator, updateDisplay}) => {
   const displayedNumbers = numbers.map(number => {
     return (
-      <p key={number}>{number}</p>
+      <Key
+        key={number}
+        keyAction={updateDisplay}
+        keyType="number-key"
+        keyValue={number}
+      />
     )
   });
 
   const displayedOperators = operators.map(operator => {
     return (
-      <p key={operator}>{operator}</p>
+      <Key
+        key={operator}
+        keyAction={updateDisplay}
+        keyType="operator-key"
+        keyValue={operator}
+      />
     )
   });
 
@@ -24,11 +34,13 @@ const Keypad = ({callOperator, numbers, operators, setOperator, updateDisplay}) 
       <div className="operators-container">
         {displayedOperators}
       </div>
-      <Key
-        keyAction={callOperator}
-        keyType=""
-        keyValue=""
-      />
+      <div className="submit-container">
+        <Key
+          keyAction={callOperator}
+          keyType="submit-key"
+          keyValue="="
+        />
+      </div>
     </div>
   );
 }

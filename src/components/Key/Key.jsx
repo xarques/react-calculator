@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Key.css';
 
 const Key = (({keyAction, keyType, keyValue}) => {
-  return (<div className='key-container' />)
+  return (
+    <div className={`key-container ${keyType}`}>
+      <p className='key-value'>
+        {keyValue}
+      </p>
+    </div>
+  );
 });
 
 Key.propTypes = {
