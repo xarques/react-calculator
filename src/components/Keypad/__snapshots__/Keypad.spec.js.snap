@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Keypad mounted Keypad should render correctly 1`] = `
+exports[`mounted Keypad should render correctly 1`] = `
 ReactWrapper {
   "length": 1,
   Symbol(enzyme.__unrendered__): <Keypad

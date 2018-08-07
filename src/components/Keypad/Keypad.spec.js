@@ -2,18 +2,18 @@ import React from 'react';
 import {mount, shallow} from 'enzyme';
 import Keypad from './Keypad';
 
+const keyPadComponent = <Keypad
+  callOperator={jest.fn()}
+  numbers={[]}
+  operators={[]}
+  setOperator={jest.fn()}
+  updateDisplay={jest.fn()}
+/>
+
 describe('Keypad', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(
-      <Keypad
-        callOperator={jest.fn()}
-        numbers={[]}
-        operators={[]}
-        setOperator={jest.fn()}
-        updateDisplay={jest.fn()}
-      />
-    );
+    wrapper = shallow(keyPadComponent);
   })
   it('should render 4 <div />\'s', () => {
     expect(wrapper.find('div').length).toEqual(4);
@@ -27,32 +27,25 @@ describe('Keypad', () => {
     wrapper.setProps({numbers, operators});
     expect(wrapper.find("Key").length).toEqual(keyTotal);
   });
+});
 
-  describe('mounted Keypad', () => {
-    let wrapper;
-    beforeEach(() => {
-      wrapper = mount(
-        <Keypad
-          callOperator={jest.fn()}
-          numbers={[]}
-          operators={[]}
-          setOperator={jest.fn()}
-          updateDisplay={jest.fn()}
-        />
-      )
-    })
-    it('renders the values of numbers to the DOM', () => {
-      wrapper.setProps({numbers: ['0','1','2']});
-      expect(wrapper.find('.numbers-container').text()).toEqual('012');
-    });
-
-    it('renders the values of operators to the DOM', () => {
-      wrapper.setProps({operators: ['+', '-', '*', '/']});
-      expect(wrapper.find('.operators-container').text()).toEqual('+-*/');
-    });
-
-    it('should render correctly', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
+describe('mounted Keypad', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = mount(keyPadComponent)
   });
-})
+
+  it('renders the values of numbers to the DOM', () => {
+    wrapper.setProps({numbers: ['0','1','2']});
+    expect(wrapper.find('.numbers-container').text()).toEqual('012');
+  });
+
+  it('renders the values of operators to the DOM', () => {
+    wrapper.setProps({operators: ['+', '-', '*', '/']});
+    expect(wrapper.find('.operators-container').text()).toEqual('+-*/');
+  });
+
+  it('should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+});
