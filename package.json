@@ -7,24 +7,10 @@
     "react-dom": "^16.3.1"
   },
   "devDependencies": {
-    "codecov": "^3.0.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "react-scripts": "1.1.4",
     "react-test-renderer": "^16.4.2"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/App.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
   },
   "scripts": {
     "start": "react-scripts start",
