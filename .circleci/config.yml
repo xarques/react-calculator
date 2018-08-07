@@ -1,65 +1,27 @@
 version: 2
 jobs:
-  checkout_code:
+  build:
     docker:
       - image: circleci/node:8
-    working_directory: ~/circleci-deployment
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/circleci-deployment
-      - restore_cache:
-          keys:
-            - yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-cache-{{ .Branch }}
-            - yarn-cache-
-      - run: yarn install
-      - save_cache:
-          key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths: node_modules
-      - persist_to_workspace:
-          root: .
-          paths: .
-  check_vulnerabilities:
-    docker:
-      - image: circleci/node:8
-    working_directory: ~/circleci-deployment
-    steps:
-      - attach_workspace:
-          at: ~/circleci-deployment
-      - run: yarn install
-      - run: |
-            if [ "${CIRCLE_BRANCH}" == "production" ]; then
-              yarn validate:dependencies
-            else
-              yarn validate:dependencies || true
-            fi
-  test_and_report:
-    docker:
-      - image: circleci/node:8
-    working_directory: ~/circleci-deployment
-    steps:
-      - attach_workspace:
-          at: ~/circleci-deployment
-      - run: yarn install
-      - run: CI=true yarn test:coverage
-      - run: yarn reportCoverage
-      - store_artifacts:
-          path: ./coverage/clover.xml
-          prefix: tests
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
-      - store_test_results:
-          path: ./coverage/clover.xml
-workflows:
-  version: 2
-  test:
-    jobs:
-      - checkout_code
-      - check_vulnerabilities:
-          requires:
-            - checkout_code
-      - test_and_report:
-          requires:
-            - checkout_code
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+      - run:
+          name: Setup Dependencies
+          command: npm install
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run: # run tests
+          name: Run Test and Coverage
+          command: |
+            ./cc-test-reporter before-build
+            npm test -- --coverage
+            ./cc-test-reporter after-build --exit-code $?
