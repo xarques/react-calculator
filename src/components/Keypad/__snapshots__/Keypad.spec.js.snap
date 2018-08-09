@@ -169,6 +169,7 @@ ReactWrapper {
                     =
 </p>,
                   "className": "key-container submit-key",
+                  "onClick": [Function],
                 },
                 "ref": null,
                 "rendered": Array [
@@ -355,6 +356,7 @@ ReactWrapper {
                       =
 </p>,
                     "className": "key-container submit-key",
+                    "onClick": [Function],
                   },
                   "ref": null,
                   "rendered": Array [
