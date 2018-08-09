@@ -19,7 +19,7 @@ const Keypad = ({callOperator, numbers, operators, setOperator, updateDisplay}) 
     return (
       <Key
         key={operator}
-        keyAction={updateDisplay}
+        keyAction={setOperator}
         keyType="operator-key"
         keyValue={operator}
       />
