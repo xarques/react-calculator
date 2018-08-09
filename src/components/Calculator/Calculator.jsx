@@ -18,15 +18,15 @@ class Calculator extends Component {
     this.setOperator = this.setOperator.bind(this);
     this.updateDisplay = this.updateDisplay.bind(this);
   }
-  
+
   callOperator() {
     let { displayValue, selectedOperator, storedValue } = this.state;
     // temp variable for updating state storedValue
     const updateStoredValue = displayValue;
 
     // parse strings for operations
-    displayValue = parseInt(displayValue, 10);
-    storedValue = parseInt(storedValue, 10);
+    displayValue = parseFloat(displayValue, 10);
+    storedValue = parseFloat(storedValue, 10);
 
     // performs selected operation
     switch (selectedOperator) {
@@ -81,8 +81,7 @@ class Calculator extends Component {
     let {displayValue} = this.state;
     // prevent multiple occurences of '.'
     if (value === '.' && displayValue.includes('.')) value = '';
-
-    if (value === 'ce') {
+    else if (value === 'ce') {
       // deletes last char in displayValue
       displayValue = displayValue.substr(0, displayValue.length - 1);
       // set displayValue to '0' if displayValue is empty string
